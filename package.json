@@ -1,5 +1,5 @@
 {
-  "name": "pcf-project",
+  "name": "table-ms",
   "version": "1.0.0",
   "description": "Project containing your PowerApps Component Framework (PCF) control.",
   "scripts": {
@@ -9,10 +9,15 @@
     "start": "pcf-scripts start"
   },
   "dependencies": {
+    "@innovaccer/design-system": "^1.0.0-24",
     "@types/node": "^10.12.18",
-    "@types/powerapps-component-framework": "^1.2.0"
+    "@types/powerapps-component-framework": "^1.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@types/react": "^16.9.42",
+    "@types/react-dom": "^16.9.8",
     "pcf-scripts": "^1",
     "pcf-start": "^1"
   }

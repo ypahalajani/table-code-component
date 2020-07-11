@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="InnovaccerNamespace" constructor="TSTable" version="0.0.1" display-name-key="TSTable" description-key="TSTable description" control-type="standard">
+  <control namespace="InnovaccerNamespace"
+    constructor="TSTable"
+    version="1.0.0"
+    display-name-key="TSTable"
+    description-key="TSTable description"
+    control-type="standard"
+    display-name-key="Table Component"
+    description-key="Allows you to render content in a tabular format with quite a number of configurable options.">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
-    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="sampleProperty"
+      display-name-key="Property_Display_Key"
+      description-key="Property_Desc_Key"
+      of-type="SingleLine.Text"
+      usage="bound"
+      required="true" />
     <!-- 
       Property node's of-type attribute can be of-type-group attribute. 
       Example:
