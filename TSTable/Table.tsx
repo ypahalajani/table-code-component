@@ -1,17 +1,32 @@
 import * as React from "react";
 import { Table as InnovaccerTable } from "@innovaccer/design-system";
+import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
 type TableProps = InnovaccerTable["props"];
 
-class Table extends React.PureComponent {
-  private fetchData = () =>
-    Promise.resolve({
-      count: 0,
-      data: [],
-      schema: [],
-    });
-  public render() {
-    const loaderSchema: TableProps["schema"] = [
+export interface IProps extends Partial<TableProps> {
+  id: string;
+  context: ComponentFramework.Context<IInputs>;
+}
+
+class Table extends React.PureComponent<IProps> {
+  private filterList = {
+    name: ["h-r", "s-z"],
+  };
+
+  private headerOptions = {
+    withSearch: true,
+  };
+
+  static defaultProps: TableProps = {
+    data: [],
+    fetchData: () =>
+      Promise.resolve({
+        count: 0,
+        data: [],
+        schema: [],
+      }),
+    schema: [
       {
         cellType: "AVATAR_WITH_TEXT",
         displayName: "Name",
@@ -38,23 +53,21 @@ class Table extends React.PureComponent {
         separator: true,
         width: 200,
       },
-    ];
-    const filterList = {
-      name: ["h-r", "s-z"],
-    };
-    const headerOptions = {
-      withSearch: true,
-    };
+    ],
+  };
+
+  public render() {
+    const { id, context, data, fetchData, schema, ...restProps } = this.props;
     return (
       <>
         <InnovaccerTable
-          data={[]}
-          fetchData={this.fetchData}
+          data={data!}
+          fetchData={fetchData!}
+          schema={schema!}
           draggable
-          filterList={filterList}
-          headerOptions={headerOptions}
-          schema={loaderSchema}
-          onPageChange={function (_) {}}
+          filterList={this.filterList}
+          headerOptions={this.headerOptions}
+          onPageChange={function () {}}
           onRowClick={function (_) {}}
           onSelect={function (_) {}}
           pageSize={12}
@@ -67,6 +80,7 @@ class Table extends React.PureComponent {
           withCheckbox
           withHeader
           withPagination
+          {...restProps}
         />
       </>
     );

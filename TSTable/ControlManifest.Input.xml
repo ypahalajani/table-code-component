@@ -28,6 +28,7 @@
     -->
     <resources>
       <code path="index.ts" order="1"/>
+      <css path="styles/dist/index.css" order="2" />
       <!-- UNCOMMENT TO ADD MORE RESOURCES
       <css path="css/TSTable.css" order="1" />
       <resx path="strings/TSTable.1033.resx" version="1.0.0" />
