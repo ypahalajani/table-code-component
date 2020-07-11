@@ -39,6 +39,7 @@ export class TSTable
     if (currentPageContext && currentPageContext.entityId) {
       this.componentProps.id = currentPageContext.entityId;
       this.componentProps.context = context;
+      this.componentProps.withHeader = context.parameters.withHeader.raw;
     }
     this.componentContainer = container;
   }
@@ -51,6 +52,7 @@ export class TSTable
     // Add code to update control view
 
     this.componentProps.context = context;
+    this.componentProps.withHeader = context.parameters.withHeader.raw;
     ReactDOM.render(
       React.createElement(Table, this.componentProps),
       this.componentContainer
@@ -62,7 +64,9 @@ export class TSTable
    * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as “bound” or “output”
    */
   public getOutputs(): IOutputs {
-    return {};
+    return {
+      withHeader: this.componentProps.withHeader,
+    };
   }
 
   /**

@@ -3,8 +3,9 @@ import { Table as InnovaccerTable } from "@innovaccer/design-system";
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
 type TableProps = InnovaccerTable["props"];
+type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
-export interface IProps extends Partial<TableProps> {
+export interface IProps extends Partial<Writeable<TableProps>> {
   id: string;
   context: ComponentFramework.Context<IInputs>;
 }
@@ -29,7 +30,7 @@ class Table extends React.PureComponent<IProps> {
             gender: "Male",
           },
           {
-            name: "Dhirah Pahalajani",
+            name: "Dhiraj Pahalajani",
             gender: "Male",
           },
           {
