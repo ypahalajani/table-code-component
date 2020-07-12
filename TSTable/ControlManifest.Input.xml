@@ -14,6 +14,10 @@
       of-type="TwoOptions"
       usage="bound"
       default-value="false" />
+    <data-set name="sampleDataSet" display-name-key="Dataset_Display_Key">
+      <property-set name="samplePropertySet" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true"/>
+      <property-set name="samplePropertySet2" display-name-key="Property_Display_Key2" description-key="Property_Desc_Key2" of-type="SingleLine.Text" usage="bound" required="true"/>
+    </data-set>
     <!-- 
       Property node's of-type attribute can be of-type-group attribute. 
       Example:

@@ -72,7 +72,7 @@ class Table extends React.PureComponent<IProps> {
   public render() {
     const { id, context, data, fetchData, schema, ...restProps } = this.props;
     return (
-      <>
+      <React.Fragment>
         <InnovaccerTable
           data={data!}
           fetchData={fetchData!}
@@ -95,7 +95,7 @@ class Table extends React.PureComponent<IProps> {
           withPagination
           {...restProps}
         />
-      </>
+      </React.Fragment>
     );
   }
 }

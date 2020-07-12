@@ -11,6 +11,7 @@ export class TSTable
     id: "",
     context: this._context,
   };
+  private _notifyOutputChanged: () => void;
 
   /**
    * Empty constructor.
@@ -31,18 +32,75 @@ export class TSTable
     state: ComponentFramework.Dictionary,
     container: HTMLDivElement
   ) {
+    context.mode.trackContainerResize(true);
     // Add control initialization code
     let currentPageContext = context as any;
     currentPageContext = currentPageContext
       ? currentPageContext["page"]
       : undefined;
+    debugger;
     if (currentPageContext && currentPageContext.entityId) {
       this.componentProps.id = currentPageContext.entityId;
       this.componentProps.context = context;
       this.componentProps.withHeader = context.parameters.withHeader.raw;
     }
     this.componentContainer = container;
+    this._notifyOutputChanged = notifyOutputChanged;
   }
+
+  private getSchema = (context: ComponentFramework.Context<IInputs>) => {
+    const {
+      parameters: {
+        sampleDataSet: { columns },
+      },
+    } = context;
+    return columns.map((column) => ({
+      displayName: column.displayName,
+      name: column.name,
+    }));
+  };
+
+  private getFormattedData = (context: ComponentFramework.Context<IInputs>) => {
+    const {
+      parameters: {
+        sampleDataSet: { columns, sortedRecordIds, records },
+      },
+    } = context;
+    const schema = this.getSchema(context);
+    const data = sortedRecordIds.map((recordId) => {
+      const row = records[recordId];
+      // TODO: replace any by proper type
+      const fomattedRow = schema.reduce<any>((result, column) => {
+        result[column.name] = row.getFormattedValue(column.name);
+        return result;
+      }, {});
+      return fomattedRow;
+    });
+    return data;
+  };
+
+  private extractPropsFromContext = (
+    context: ComponentFramework.Context<IInputs>
+  ): ITableProps => {
+    const { withHeader, sampleDataSet } = context.parameters;
+    const { loading } = sampleDataSet;
+
+    const schema = this.getSchema(context).map((item) => ({
+      ...item,
+      width: 300,
+    }));
+    const data = this.getFormattedData(context);
+
+    return {
+      withHeader: withHeader.raw,
+      id: `id-${new Date().valueOf()}`,
+      context,
+      schema,
+      data,
+      loading,
+      fetchData: () => Promise.resolve({ count: data.length, data, schema }),
+    };
+  };
 
   /**
    * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
@@ -50,9 +108,10 @@ export class TSTable
    */
   public updateView(context: ComponentFramework.Context<IInputs>): void {
     // Add code to update control view
+    console.log("[TSTable/index.ts] inside updateView");
 
-    this.componentProps.context = context;
-    this.componentProps.withHeader = context.parameters.withHeader.raw;
+    this.componentProps = this.extractPropsFromContext(context);
+
     ReactDOM.render(
       React.createElement(Table, this.componentProps),
       this.componentContainer
