@@ -2,7 +2,7 @@
 <manifest>
   <control namespace="InnovaccerNamespace"
     constructor="TSTable"
-    version="1.0.0"
+    version="1.0.1"
     display-name-key="TSTable"
     description-key="TSTable description"
     control-type="standard"
