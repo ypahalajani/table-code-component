@@ -10,6 +10,9 @@ export class TSTable
   private componentProps: ITableProps = {
     id: "",
     context: this._context,
+    data: [],
+    schema: [],
+    fetchData: () => Promise.resolve({ count: 0, data: [], schema: [] }),
   };
   private _notifyOutputChanged: () => void;
 
